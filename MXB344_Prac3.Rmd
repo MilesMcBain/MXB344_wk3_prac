@@ -1,0 +1,85 @@
+---
+title: "MXB344 Week 3 Practical Poisson Regression"
+author: "Miles McBain"
+date: "11 August 2016"
+output: html_document
+---
+
+#Intro
+This week we're going to analyse some data on crabs with the aim of working through a complete reproducible Possion regression analysis. It'll be fun - I swear. The data come from [Categorical Data Analysis](http://www.stat.ufl.edu/~aa/cda/data.html) by Alan Agresti. This prac is loosely based on [this one](https://onlinecourses.science.psu.edu/stat504/node/169) from Pennsylvania State University.
+
+Hopefully we got the kinks ironed out last week, because I want to make this prac more interactive. I'll only give basic instructions here, which we will flesh out together in the prac.
+
+#Learning Objectives
+The exercise aims to work through a possion regression analysis. Similar to your first assignment.
+
+#Requirements
+To complete this exercise you will need a computer with R Studio installed and the following packages:
+
+* `dplyr`
+* `tidyr`
+* `ggplot2`
+* `readr`
+* `rmarkdown`
+* `plotly` - For interactive plots
+
+
+#Instructions
+As always ask questions if you do not understand. Any subject relating to github, R, and poisson regression is fair game.
+
+## Get Set Up
+Assuming you are on a QUT windows PC:
+
+1. Install missing R packages in RStudio: `install.packages("plotly")`
+2. Fork the practical repository on github.com from [here](https://github.com/MilesMcBain/MXB344_wk3_prac)
+3. Install the github windows client from [https://desktop.github.com/](https://desktop.github.com/)
+4. Clone your fork of the prac to a directory on your workstation's hard disk.
+5. Open a local version of this source file.
+6. change the `setwd()` command below to the folder where you cloned the practical repo.
+7. knit this file to html.
+
+```{r}
+setwd("~/")
+```
+
+
+## Load the data
+```{r, echo=FALSE}
+library(readr)
+crabs <- read_csv("./data/crabs.csv")
+```
+
+## Build out report
+Fill out the template structure below based on our work through.
+
+## Knit to HTML
+When the report is complete knit it to html.
+
+## Commit using git Push to github
+Commit this .rmd file and push to your github fork.
+
+#Report Template
+
+## Background
+Each female horseshoe crab in the study had a male crab attached to her in her nest. The study investigated factors that affect whether the female crab had any other males, called satellites, residing near her. Explanatory variables that are thought to affect this included the female crab’s color, spine condition, weight, and carapace width. The response outcome for each female crab is her number of satellites. There are 173 females in this study. 
+
+## Exploratory Analysis
+**TODO:** Plots that investigate linearity of $Y_{i}'s$ and $X{i}'s$. The log scale will be important to consider. How do we handle 0 counts?   
+
+## Data transformations
+**TODO:** Some work to turn factors into ordinal variables?
+
+## Model Selection
+**TODO:** Select model using appropriate measures.
+
+## Model Validation
+**TODO:** Justify model selection using goodness of fit tests. Assert assumptions are valid.
+
+## Model Performance
+**TODO:** A plot may suffice. Is there a better way?
+
+## Discussion
+**TODO:** Make an interpretation of the factors in your chosen model.
+
+## Conclusion
+**TODO:** Sum up. What are you confident about? What questions are left unresolved?
