@@ -73,7 +73,7 @@ Each female horseshoe crab in the study had a male crab attached to her in her n
 **TODO:** Select model using appropriate measures.
 
 ## Model Validation
-**TODO:** Justify model selection using goodness of fit tests. Assert assumptions are valid.
+**TODO:** Justify model selection using goodness of fit tests. Assert assumptions are valid (Dispersion?).
 
 ## Model Performance
 **TODO:** A plot may suffice. Is there a better way?
