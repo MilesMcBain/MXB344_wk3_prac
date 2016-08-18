@@ -39,7 +39,7 @@ Assuming you are on a QUT windows PC:
 7. knit this file to html.
 
 ```{r}
-setwd("~/")
+#setwd("~/")
 ```
 
 
@@ -66,17 +66,100 @@ Each female horseshoe crab in the study had a male crab attached to her in her n
 ## Exploratory Analysis
 **TODO:** Plots that investigate linearity of $Y_{i}'s$ and $X{i}'s$. The log scale will be important to consider. How do we handle 0 counts?   
 
+```{r}
+library(dplyr)
+library(ggplot2)
+#crabs <- 
+#crabs %>% mutate(satellites = ifelse(satellites == 0,
+#                       yes = 0.01,
+#                        no = satellites)) %>%
+#  mutate(log_satellites = log(satellites))
+
+#Cool way
+#pairs(~ colour + spine_condition + weight + width + log(satellites) , data= crabs)
+
+#ggplot(crabs, aes(x=colour, y=log_satellites)) + geom_boxplot(aes(group=colour))
+```
+
+
 ## Data transformations
-**TODO:** Some work to turn factors into ordinal variables?
+```{r}
+
+```
+
 
 ## Model Selection
 **TODO:** Select model using appropriate measures.
+```{r}
+glm(data=crabs,
+    formula=satellites ~ colour + weight,
+    family=poisson("log")) %>%
+  summary()
+
+
+crabs %>% 
+  mutate(colour = as.factor(colour)) %>%
+  glm(formula=satellites ~ colour + weight,
+    family=poisson("log")) %>%
+  summary()
+
+```
+
 
 ## Model Validation
 **TODO:** Justify model selection using goodness of fit tests. Assert assumptions are valid (Dispersion?).
 
+* Model is better than null model ?
+* Model is worse than saturated model ?
+* Model does not contain redudundant parameters ?
+* Sum of Pearson residuals $\ne N-p$ ?
+    + Dispersion issue?
+* Residuals are well behaved ?
+* There are no observations exerting undue leverage ?
+* Fitted values appear to systematically underestimate/overestimate ? 
+    + Underfit?
+* AIC is at a minimum ?
+
+```{r}
+anova(glm1, test="Chisq")
+```
+```{r}
+pchisq(glm1$deviance,df = 167, lower.tail = FALSE)
+```
+```{r}
+sum(residuals(glm1, type="pearson")^2)
+```
+```{r}
+plot(glm1, which=4)
+```
+
+
+```{r}
+library(broom)
+glm1_results <-augment(glm1)
+glm1_results <-
+  glm1_results %>% 
+  mutate(.pearson = residuals(glm1, type="pearson"))
+
+ggplot(data = glm1_results, aes(x=.fitted, y=.pearson)) + geom_point()
+
+```
+
+
 ## Model Performance
 **TODO:** A plot may suffice. Is there a better way?
+
+```{r}
+glm1_results %>% 
+  arrange(satellites) %>% 
+  ggplot() +
+  geom_point(aes(x = 1:nrow(glm1_results), y=exp(.fitted), colour="fitted")) + 
+  geom_point(aes(x=1:nrow(glm1_results), y=satellites, colour="satellites")) +
+  ylab("Response") +
+  xlab("Observation number by order of increasing satellites") +
+  theme_minimal()
+```
+
 
 ## Discussion
 **TODO:** Make an interpretation of the factors in your chosen model.
