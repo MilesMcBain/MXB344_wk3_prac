@@ -71,6 +71,26 @@ Each female horseshoe crab in the study had a male crab attached to her in her n
 
 ## Model Selection
 **TODO:** Select model using appropriate measures.
+```{r}
+glm_fit <- glm(data = crabs,
+              formula = satellites ~ width + I(width^2) + colour + weight + spine_condition,
+              family = poisson(link="log") )
+
+summary(glm_fit)
+plot(glm_fit)
+```
+```{r}
+library(ggplot2)
+library(broom)
+library(dplyr)
+library(plotly)
+glm_fit_df <- tidy(glm_fit)
+glm_fit_df
+glm_fit_aug <- augment(glm_fit)
+glm_fit_aug %>% mutate(real.fit = exp(.fitted)) %>%
+  ggplot(aes(x=.fitted,y=(satellites - .fitted)/(.fitted)  )) + geom_point()
+ggplotly()
+```
 
 ## Model Validation
 **TODO:** Justify model selection using goodness of fit tests. Assert assumptions are valid (Dispersion?).
