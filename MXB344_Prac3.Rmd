@@ -121,7 +121,7 @@ crabs %>%
 * AIC is at a minimum ?
 
 ```{r}
-anova(glm1, test="Chisq")
+#anova(glm1, test="Chisq")
 ```
 ```{r}
 pchisq(glm1$deviance,df = 167, lower.tail = FALSE)
